@@ -1,20 +1,44 @@
 fn diagonalDifference(arr: &[Vec<i32>]) -> i32 {
     let mut first_diag = 0;
     let mut second_diag:i32 = 0;
-    let mut length = arr[0].len() as i32;
+    let mut length = arr[0].len();
+    let mut last_index = 0;
+    println!("length: {length}");
 
-    for i in 0..3 {
-        first_diag += arr[i][i];
-        second_diag += arr[i][length as usize - ((i)+1)];
-        println!("first: {}, second: {}",arr[i][i], length - ((i as i32)));
+    for j in 0..arr.len()-1{
+        let range = length/arr.len() + last_index;
+        for i in last_index..range {
+            first_diag += arr[j][i];
+            second_diag += arr[j][length - ((i)+1)];
+            println!("first: {}, second: {}",arr[j][i], arr[j][length - (i + 1)]);
+            if(i == range-1){
+                last_index = i;
+            }
+        }
+
     }
+
 
     (first_diag-second_diag).abs()
 }
 
+fn diagonalDifference2(arr: &[Vec<i32>]) -> i32 {
+    let n = arr.len();
+    let mut first_diag = 0;
+    let mut second_diag = 0;
+
+    for i in 0..n {
+        first_diag += arr[i][i];
+        second_diag += arr[i][n - i - 1];
+    }
+
+    (first_diag - second_diag).abs()
+}
+
+
 #[test]
 fn test(){
-    println!("diagonal difference:{}", diagonalDifference(&[
+    println!("diagonal difference:{}", diagonalDifference2(&[
         vec![100, -73, 28, 71, -35, -94, 11, 7, -5, 31, 57, -4, -35, -33, 86, 71, 84, 81, 6, 26, -85, 99, -48, -77, 58, 77, 64, 34, 37, -72, -47, -94, 60, 12, -23, 81, 63, 52, -76, 23, 62, 11, 17, -98, -96, 66, 18, -52, 63, 16, 55, -38, 98, 46, 83, 34, -52, 90, -47, -32, 40, 81, -40, -19, 54, 44, -22, 71, 52, 98, 16, -7, 8, -67, -90, -15, -19, -60, -13, -37, -79, -19, -3, -17, 52, 98, -80, 96, -1, 73, 60, 96, -22, 68, 68, -27, -37, -50, -100],
         vec![90, 100, 98, -32, -96, -90, 63, -74, 25, 56, 6, 45, -20, -83, 66, 24, 22, -90, -22, 43, -34, -25, 10, -89, 18, -16, 66, -34, -29, 47, 63, -20, 19, -86, -71, 18, -90, 28, -31, -23, -3, 35, -26, -14, -80, 29, 63, 60, -57, 76, -89, 23, 75, 89, -51, 70, -99, 11, -46, -73, -16, -71, -74, -92, 70, -51, 43, -47, -3, -17, -32, 100, -30, -11, 64, 76, 8, -87, -66, -29, 5, -9, 99, -49, -76, 77, -57, -93, 69, 40, -77, -45, -71, 6, 72, -39, 94, -100, -6],
         vec![-13, -96, 100, -62, 92, -47, 38, -46, 74, -14, 46, 78, -83, 46, 45, 13, 17, -10, -26, -24, 38, 91, 62, 51, -7, -4, -88, 45, 5, 48, 95, -36, 15, 35, 6, -23, 15, -77, -37, -7, -29, -97, 44, -12, 78, -43, 61, 63, -62, -96, 12, -74, -33, -4, 79, -15, 39, -28, -12, 90, 57, 44, -6, 11, 44, -43, -16, -27, -67, -18, 34, -7, -46, -8, 11, 43, 23, 88, -84, 89, -45, 63, -84, 0, -25, 93, -86, 57, 73, 88, -10, 46, -29, -61, -90, -2, -100, -22, -10]
